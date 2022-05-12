@@ -1,0 +1,29 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="content-section">
+      <div class="media row">
+        <div class="col-md-4">
+        <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
+        </div>
+        <div class="media-body col-md-8">
+          <h2 class="account-heading">{{ user.username }}</h2>
+          <p class="text-secondary">{{ user.email }}</p>
+        </div>
+      </div>
+      {% comment %} multiapart is to trasnferring image to backend in small parts rather than full large size {% endcomment %}
+      <form method="POST" enctype="multipart/form-data"> 
+        {% comment %} enctype is used for image processing without this functionality image will not save in background {% endcomment %}
+    
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Profile Information</legend>
+            {{ u_form|crispy }}
+            {{ p_form|crispy }}
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline-info" type="submit">Update</button>
+        </div>
+    </form>
+    </div>
+{% endblock content %}
